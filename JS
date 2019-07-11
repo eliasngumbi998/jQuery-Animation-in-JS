@@ -1,0 +1,101 @@
+<html>
+<head>
+    <title>Randomic</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+    <style>
+        body{
+            background-color: gainsboro;
+        }
+        section div{
+            margin: 9px;
+            height: 150px;
+            width: 150px;
+            border: 8px dotted white ;
+            border-radius: 150px;
+            background-color: darkkhaki;
+            position: absolute;
+        }
+        #Position{
+            position: fixed;
+        }
+        #First{
+            margin: 9px;
+            height: 150px;
+            width: 150px;
+            border: 8px dotted black ;
+            border-radius: 150px;
+            background-color: white;
+            position: absolute;
+        }
+    </style>
+
+    <script>
+        $(document ).ready(function() {
+            $pageHeight=$(document).height();
+            $pageWidth=$(document).width();
+            $('#Position').css({left : $pageWidth /2 -50 , top : $pageHeight /2});
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var i = 0; i < 6; i++ ) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+            function moveIT($element) {
+
+                $($element).css('background-color', getRandomColor());
+               var timer1= setInterval(function(){
+                    var $left =parseInt($($element).css('left'));
+                    var $top =parseInt($($element).css('top'));
+                    if (($top==8)) {
+                        $left =parseInt($($element).css('left'))+125;
+
+                        $($element).animate({left: $left});
+                        if (!($left<1133)){
+                            $top =parseInt($($element).css('top'))+150;
+                            $($element).animate({top: $top});
+                        }
+                    }else if ($top==158){
+                        $left =parseInt($($element).css('left'))-125;
+                        $($element).animate({left: $left});
+                        if (!($left>8)){
+                            $top =parseInt($($element).css('top'))+150;
+                            $($element).animate({top: $top});
+                        }
+                    }else if($top==308){
+                        $left =parseInt($($element).css('left'))+125;
+                        $($element).animate({left: $left});
+                        if (!($left<1133)){
+                            $top =parseInt($($element).css('top'))+150;
+                            $($element).animate({top: $top});
+                        }
+                    }else if($top==458) {
+                        $left =parseInt($($element).css('left'))-125;
+                        $($element).animate({left: $left});
+                        if ($left<=8){
+                            clearInterval(timer1);
+                            $element.hide('slow', function(){ $element.remove(); });
+
+                        }
+                        }
+                }, 1000 );
+            }
+
+
+           setInterval(function(){
+            $('section').prepend("<div></div>")
+            moveIT($("section div:first-child"));
+            }, 1000 );
+        });
+    </script>
+    <script>
+
+    </script>
+</head>
+<body>
+<section >
+    <div id="First"></div>
+    </section>
+</body>
+</html>
